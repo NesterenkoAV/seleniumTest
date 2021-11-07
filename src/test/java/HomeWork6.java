@@ -1,22 +1,21 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
 
 public class HomeWork6 {
     protected static WebDriver driver;
-    private final Logger logger = (Logger) LogManager.getLogger(HomeWork6.class);
+    private org.apache.logging.log4j.Logger logger = LogManager.getLogger(Logger.class);
 
     @Test
     public void PersonalAccountTest() throws Exception {
@@ -34,6 +33,7 @@ public class HomeWork6 {
         driver.findElement(By.cssSelector("input[name='country'] + div")).click();
         driver.findElement(By.cssSelector("button[title='Россия']")).click();
         Thread.sleep(3000);
+
         driver.findElement(By.cssSelector("input[data-title='Город'] + div")).click();
         driver.findElement(By.cssSelector("button[title='Анапа']")).click();
         driver.findElement(By.cssSelector("input[data-title='Уровень знания английского языка'] + div")).click();
@@ -107,6 +107,8 @@ public class HomeWork6 {
     private void loginAndGoToPersonalAccount() {
         //Настройка ВебДрайвера
         WebDriverManager.chromedriver().setup();
+        String login = "nesterenkoav996@gmail.com";
+        String password = "Q1w2e3r4";
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -116,8 +118,8 @@ public class HomeWork6 {
         logger.info("Сайт открыт");
         //Ввод логина и пароля
         driver.findElement(By.cssSelector("span[class*=header2__auth-reg]")).click();
-        driver.findElement(By.cssSelector("input[class*='js-email-input']")).sendKeys("nesterenkoav996@gmail.com");
-        driver.findElement(By.cssSelector("input[class*='js-psw-input']")).sendKeys("Q1w2e3r4");
+        driver.findElement(By.cssSelector("input[class*='js-email-input']")).sendKeys(login);
+        driver.findElement(By.cssSelector("input[class*='js-psw-input']")).sendKeys(password);
         //нажатие на кнопку "Вход и регистрация"
         driver.findElement(By.cssSelector("button[class*='new-button_md']")).click();
         // Переход на форму "Личный кабинет"
@@ -133,7 +135,24 @@ public class HomeWork6 {
         Thread.sleep(1000);
         logger.info("Вышли из личного кабинета");
         driver.quit();
+        logger.info("Закрыт браузер");
 
     }
 
+    public void waitSelector(String locator) {
+        new WebDriverWait(driver, 40).until(
+                ExpectedConditions.elementToBeClickable(By.cssSelector(locator))
+//                ExpectedConditions.presenceOfElementLocated(By.cssSelector(locator))
+        );
+
+    }
+
+//public void waitElementUntilClickableByLocator(String timeToWait, String Locator)
+//{
+//    this->webDriver->wait(timeToWait, 200)->until(  //Указываем таймаут ожидания активности элемента, иначе TimeoutException
+//        WebDriverExpectedCondition::elementToBeClickable(WebDriverBy::Locator($Locator))); //Указываем локатор элемента, активности которого ждём
+//}y
+//
+//
 }
+//wait.until(drv-> drv.findElements(By.cssSelector("input[data-title='Город'] + div")).size()>15);
