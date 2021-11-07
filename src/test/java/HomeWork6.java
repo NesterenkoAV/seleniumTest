@@ -30,12 +30,13 @@ public class HomeWork6 {
         driver.findElement(By.cssSelector("input[id='id_fname_latin']")).sendKeys("Alexey");
         driver.findElement(By.cssSelector("input[id='id_lname_latin']")).sendKeys("Nesterenko");
         driver.findElement(By.cssSelector("input[name='date_of_birth']")).sendKeys("06.09.1985" + Keys.ENTER);
+
         driver.findElement(By.cssSelector("input[name='country'] + div")).click();
         driver.findElement(By.cssSelector("button[title='Россия']")).click();
-        Thread.sleep(3000);
-
+        Thread.sleep(1000);
         driver.findElement(By.cssSelector("input[data-title='Город'] + div")).click();
         driver.findElement(By.cssSelector("button[title='Анапа']")).click();
+
         driver.findElement(By.cssSelector("input[data-title='Уровень знания английского языка'] + div")).click();
         driver.findElement(By.cssSelector("button[title='Средний (Intermediate)']")).click();
         driver.findElement(By.cssSelector("input[id='id_ready_to_relocate_1']+ span")).click();
@@ -54,7 +55,10 @@ public class HomeWork6 {
         logger.info("Заполнены значения атрибутов");
         // Нажатие на кнопку "Сохранить и продолжить"
         driver.findElement(By.cssSelector("button[title='Сохранить и продолжить']")).click();
-        Thread.sleep(1000);
+
+        new WebDriverWait(driver, 5).until(
+                ExpectedConditions.elementToBeClickable(By.cssSelector("div[class*='input_straight-top-right input_md-round-top-right']"))
+        );
         logout();
         loginAndGoToPersonalAccount();
         checkEnteredValues();
@@ -80,12 +84,14 @@ public class HomeWork6 {
         // Нажатие на кнопку "Сохранить и продолжить"
         logger.info("Значения атрибутов удалены");
         driver.findElement(By.cssSelector("button[title='Сохранить и продолжить']")).click();
-        Thread.sleep(1000);
-
+        new WebDriverWait(driver, 5).until(
+                ExpectedConditions.elementToBeClickable(By.cssSelector("div[class*='input_straight-top-right input_md-round-top-right']"))
+        );
     }
 
 
     private void checkEnteredValues() {
+        // Проверяем корреткноть заполнения значений атрибутов
         Assert.assertEquals("Алексей", driver.findElement(By.id("id_fname")).getAttribute("value"));
         Assert.assertEquals("Нестеренко", driver.findElement(By.id("id_lname")).getAttribute("value"));
         Assert.assertEquals("Alexey", driver.findElement(By.id("id_fname_latin")).getAttribute("value"));
@@ -101,7 +107,7 @@ public class HomeWork6 {
         Assert.assertEquals("m", driver.findElement(By.id("id_gender")).getAttribute("value"));
         Assert.assertEquals("тестировщик", driver.findElement(By.id("id_work")).getAttribute("value"));
         Assert.assertEquals("тест", driver.findElement(By.id("id_company")).getAttribute("value"));
-
+        logger.info("Значения атрибутов заполнены корректно");
     }
 
     private void loginAndGoToPersonalAccount() {
@@ -132,20 +138,10 @@ public class HomeWork6 {
         // Выход из "Личного кабинета". Закрытие браузера
         driver.findElement(By.cssSelector("div[class*='item-wrapper__username']")).click();
         driver.findElement(By.cssSelector("a[title='Выход']")).click();
-        Thread.sleep(1000);
         logger.info("Вышли из личного кабинета");
         driver.quit();
         logger.info("Закрыт браузер");
 
     }
-
-//    public void waitSelector(String locator) {
-//        new WebDriverWait(driver, 40).until(
-//                ExpectedConditions.elementToBeClickable(By.cssSelector(locator))
-//
-//        );
-//
-//    }
-
 
 }
