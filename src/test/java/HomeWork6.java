@@ -139,20 +139,13 @@ public class HomeWork6 {
 
     }
 
-    public void waitSelector(String locator) {
-        new WebDriverWait(driver, 40).until(
-                ExpectedConditions.elementToBeClickable(By.cssSelector(locator))
-//                ExpectedConditions.presenceOfElementLocated(By.cssSelector(locator))
-        );
-
-    }
-
-//public void waitElementUntilClickableByLocator(String timeToWait, String Locator)
-//{
-//    this->webDriver->wait(timeToWait, 200)->until(  //Указываем таймаут ожидания активности элемента, иначе TimeoutException
-//        WebDriverExpectedCondition::elementToBeClickable(WebDriverBy::Locator($Locator))); //Указываем локатор элемента, активности которого ждём
-//}y
+//    public void waitSelector(String locator) {
+//        new WebDriverWait(driver, 40).until(
+//                ExpectedConditions.elementToBeClickable(By.cssSelector(locator))
 //
+//        );
 //
+//    }
+
+
 }
-//wait.until(drv-> drv.findElements(By.cssSelector("input[data-title='Город'] + div")).size()>15);
